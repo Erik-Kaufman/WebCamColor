@@ -3,6 +3,7 @@
 import numpy as np
 import cv2 as cv
 
+blobDetector = cv.SimpleBlobDetector.create()
 
 # caputres the video from the camera 
 cap = cv.VideoCapture(0)
@@ -24,17 +25,13 @@ while True:
         print("Can't receive frame (stream end?). Exiting ...")
         break
     
-    if (not useColor):
-        adjFrame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    else:
-        adjFrame = frame
+    # Process image
+    keypoints = blobDetector.detect(frame)
+
+    im_with_keypoints = cv.drawKeypoints(frame, keypoints, np.array([]), (0,0,255), cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
     # Display the resulting frame
-    cv.imshow('frame', adjFrame)
-    
-    # add toggle for color -- not the exact right one for the job
-    if cv.waitKey(0) == ord('c'):
-       useColor = not useColor
+    cv.imshow('keypoints', im_with_keypoints)
 
     # press q to quit
     if cv.waitKey(1) == ord('q'):
