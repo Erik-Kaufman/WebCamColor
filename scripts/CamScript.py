@@ -3,7 +3,6 @@
 import numpy as np
 import cv2 as cv
 
-
 # caputres the video from the camera 
 cap = cv.VideoCapture(0)
 
